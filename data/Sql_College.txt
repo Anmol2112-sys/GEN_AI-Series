@@ -1,0 +1,661 @@
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database College;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> use college;
+Database changed
+MariaDB [college]> CREATE TABLE students (
+    ->     student_id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     course VARCHAR(50),
+    ->     stream VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [college]> INSERT INTO students (student_id, name, course, stream) VALUES
+    -> (101, 'Aman Sharma', 'B.Tech', 'Computer Science'),
+    -> (102, 'Riya Verma', 'B.Tech', 'Information Technology'),
+    -> (103, 'Karan Singh', 'B.Sc', 'Mathematics'),
+    -> (104, 'Neha Gupta', 'BCA', 'Computer Applications'),
+    -> (105, 'Rahul Mehta', 'B.Tech', 'Mechanical'),
+    -> (106, 'Priya Yadav', 'B.Sc', 'Physics'),
+    -> (107, 'Sanjay Kumar', 'B.Tech', 'Electrical'),
+    -> (108, 'Anjali Jain', 'BCA', 'Software Development'),
+    -> (109, 'Vikas Arora', 'B.Sc', 'Chemistry'),
+    -> (110, 'Pooja Sharma', 'B.Tech', 'Civil'),
+    -> (111, 'Mohit Agarwal', 'B.Tech', 'Artificial Intelligence'),
+    -> (112, 'Sneha Kapoor', 'BCA', 'Data Science'),
+    -> (113, 'Deepak Choudhary', 'B.Sc', 'Statistics'),
+    -> (114, 'Kavita Joshi', 'B.Tech', 'Electronics'),
+    -> (115, 'Arjun Rathore', 'BCA', 'Cyber Security');
+Query OK, 15 rows affected (0.099 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+MariaDB [college]> select * from students;
++------------+------------------+--------+-------------------------+
+| student_id | name             | course | stream                  |
++------------+------------------+--------+-------------------------+
+|        101 | Aman Sharma      | B.Tech | Computer Science        |
+|        102 | Riya Verma       | B.Tech | Information Technology  |
+|        103 | Karan Singh      | B.Sc   | Mathematics             |
+|        104 | Neha Gupta       | BCA    | Computer Applications   |
+|        105 | Rahul Mehta      | B.Tech | Mechanical              |
+|        106 | Priya Yadav      | B.Sc   | Physics                 |
+|        107 | Sanjay Kumar     | B.Tech | Electrical              |
+|        108 | Anjali Jain      | BCA    | Software Development    |
+|        109 | Vikas Arora      | B.Sc   | Chemistry               |
+|        110 | Pooja Sharma     | B.Tech | Civil                   |
+|        111 | Mohit Agarwal    | B.Tech | Artificial Intelligence |
+|        112 | Sneha Kapoor     | BCA    | Data Science            |
+|        113 | Deepak Choudhary | B.Sc   | Statistics              |
+|        114 | Kavita Joshi     | B.Tech | Electronics             |
+|        115 | Arjun Rathore    | BCA    | Cyber Security          |
++------------+------------------+--------+-------------------------+
+15 rows in set (0.001 sec)
+
+MariaDB [college]> CREATE TABLE employee (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(50),
+    ->     designation VARCHAR(50),
+    ->     salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.044 sec)
+
+MariaDB [college]> INSERT INTO employee (emp_id, emp_name, department, designation, salary) VALUES
+    -> (201, 'Raj Malhotra', 'IT', 'Software Engineer', 55000),
+    -> (202, 'Simran Kaur', 'HR', 'HR Manager', 48000),
+    -> (203, 'Amit Verma', 'Finance', 'Accountant', 42000),
+    -> (204, 'Nisha Sharma', 'IT', 'System Analyst', 60000),
+    -> (205, 'Rohit Gupta', 'Marketing', 'Marketing Executive', 39000),
+    -> (206, 'Priyanka Singh', 'Finance', 'Financial Analyst', 52000),
+    -> (207, 'Arun Yadav', 'IT', 'Developer', 45000),
+    -> (208, 'Meena Joshi', 'HR', 'Recruiter', 35000),
+    -> (209, 'Vivek Tiwari', 'Marketing', 'Sales Manager', 58000),
+    -> (210, 'Kunal Mehta', 'IT', 'Database Administrator', 62000);
+Query OK, 10 rows affected (0.034 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+MariaDB [college]> select * from employee;
++--------+----------------+------------+------------------------+----------+
+| emp_id | emp_name       | department | designation            | salary   |
++--------+----------------+------------+------------------------+----------+
+|    201 | Raj Malhotra   | IT         | Software Engineer      | 55000.00 |
+|    202 | Simran Kaur    | HR         | HR Manager             | 48000.00 |
+|    203 | Amit Verma     | Finance    | Accountant             | 42000.00 |
+|    204 | Nisha Sharma   | IT         | System Analyst         | 60000.00 |
+|    205 | Rohit Gupta    | Marketing  | Marketing Executive    | 39000.00 |
+|    206 | Priyanka Singh | Finance    | Financial Analyst      | 52000.00 |
+|    207 | Arun Yadav     | IT         | Developer              | 45000.00 |
+|    208 | Meena Joshi    | HR         | Recruiter              | 35000.00 |
+|    209 | Vivek Tiwari   | Marketing  | Sales Manager          | 58000.00 |
+|    210 | Kunal Mehta    | IT         | Database Administrator | 62000.00 |
++--------+----------------+------------+------------------------+----------+
+10 rows in set (0.001 sec)
+
+MariaDB [college]> #sub query=query inside query
+MariaDB [college]> select emp_name from employee where salary=(select Max(salary) from employee);
++-------------+
+| emp_name    |
++-------------+
+| Kunal Mehta |
++-------------+
+1 row in set (0.001 sec)
+
+MariaDB [college]> select emp_name,salary from employee where salary>(select AVG(salary) from employee);
++----------------+----------+
+| emp_name       | salary   |
++----------------+----------+
+| Raj Malhotra   | 55000.00 |
+| Nisha Sharma   | 60000.00 |
+| Priyanka Singh | 52000.00 |
+| Vivek Tiwari   | 58000.00 |
+| Kunal Mehta    | 62000.00 |
++----------------+----------+
+5 rows in set (0.001 sec)
+
+MariaDB [college]> select emp_name,salary from employee where salary>(select min(salary) from employee);
++----------------+----------+
+| emp_name       | salary   |
++----------------+----------+
+| Raj Malhotra   | 55000.00 |
+| Simran Kaur    | 48000.00 |
+| Amit Verma     | 42000.00 |
+| Nisha Sharma   | 60000.00 |
+| Rohit Gupta    | 39000.00 |
+| Priyanka Singh | 52000.00 |
+| Arun Yadav     | 45000.00 |
+| Vivek Tiwari   | 58000.00 |
+| Kunal Mehta    | 62000.00 |
++----------------+----------+
+9 rows in set (0.001 sec)
+
+
+MariaDB [college]> select emp_name from employee where department="IT" and salary=(select max(salary) from employee);
++-------------+
+| emp_name    |
++-------------+
+| Kunal Mehta |
++-------------+
+1 row in set (0.001 sec)
+
+MariaDB [college]> select emp_name,salary from employee where department="IT" and salary=(select max(salary) from employee);
++-------------+----------+
+| emp_name    | salary   |
++-------------+----------+
+| Kunal Mehta | 62000.00 |
++-------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [college]> select emp_name,salary from employee where  salary=(select max(salary) from employee where department="IT");
++-------------+----------+
+| emp_name    | salary   |
++-------------+----------+
+| Kunal Mehta | 62000.00 |
++-------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [college]> select emp_name,salary from employee where  salary=(select max(salary) from employee where department="Marketing");
++--------------+----------+
+| emp_name     | salary   |
++--------------+----------+
+| Vivek Tiwari | 58000.00 |
++--------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [college]> select emp_name,salary from employee where salary=(select min(salary) from employee);
++-------------+----------+
+| emp_name    | salary   |
++-------------+----------+
+| Meena Joshi | 35000.00 |
++-------------+----------+
+1 row in set (0.001 sec)
+
+
+MariaDB [college]> select emp_name,salary from employee where salary>(select max(salary) from employee where department="HR");
++----------------+----------+
+| emp_name       | salary   |
++----------------+----------+
+| Raj Malhotra   | 55000.00 |
+| Nisha Sharma   | 60000.00 |
+| Priyanka Singh | 52000.00 |
+| Vivek Tiwari   | 58000.00 |
+| Kunal Mehta    | 62000.00 |
++----------------+----------+
+
+MariaDB [college]> select * from employee;
++--------+----------------+------------+------------------------+----------+
+| emp_id | emp_name       | department | designation            | salary   |
++--------+----------------+------------+------------------------+----------+
+|    201 | Raj Malhotra   | IT         | Software Engineer      | 55000.00 |
+|    202 | Simran Kaur    | HR         | HR Manager             | 48000.00 |
+|    203 | Amit Verma     | Finance    | Accountant             | 42000.00 |
+|    204 | Nisha Sharma   | IT         | System Analyst         | 60000.00 |
+|    205 | Rohit Gupta    | Marketing  | Marketing Executive    | 39000.00 |
+|    206 | Priyanka Singh | Finance    | Financial Analyst      | 52000.00 |
+|    207 | Arun Yadav     | IT         | Developer              | 45000.00 |
+|    208 | Meena Joshi    | HR         | Recruiter              | 35000.00 |
+|    209 | Vivek Tiwari   | Marketing  | Sales Manager          | 58000.00 |
+|    210 | Kunal Mehta    | IT         | Database Administrator | 62000.00 |
++--------+----------------+------------+------------------------+----------+
+10 rows in set (0.001 sec)
+
+MariaDB [college]> create database employees;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [college]> CREATE TABLE employee (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(50),
+    ->     designation VARCHAR(50),
+    ->     salary DECIMAL(10,2)
+    -> );
+
+MariaDB [college]> use employees;
+Database changed
+MariaDB [employees]> CREATE TABLE employee (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(50),
+    ->     designation VARCHAR(50),
+    ->     salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.045 sec)
+
+MariaDB [employees]> INSERT INTO employee (emp_id, emp_name, department, designation, salary) VALUES
+    -> (201, 'Raj Malhotra', 'IT', 'Software Engineer', 55000),
+    -> (202, 'Simran Kaur', 'HR', 'HR Manager', 48000),
+    -> (203, 'Amit Verma', 'Finance', 'Accountant', 42000),
+    -> (204, 'Nisha Sharma', 'IT', 'System Analyst', 60000),
+    -> (205, 'Rohit Gupta', 'Marketing', 'Marketing Executive', 39000),
+    -> (206, 'Priyanka Singh', 'Finance', 'Financial Analyst', 52000),
+    -> (207, 'Arun Yadav', 'IT', 'Developer', 45000),
+    -> (208, 'Meena Joshi', 'HR', 'Recruiter', 35000),
+    -> (209, 'Vivek Tiwari', 'Marketing', 'Sales Manager', 58000),
+    -> (210, 'Kunal Mehta', 'IT', 'Database Administrator', 62000);
+Query OK, 10 rows affected (0.035 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+MariaDB [employees]> select * from employee;
++--------+----------------+------------+------------------------+----------+
+| emp_id | emp_name       | department | designation            | salary   |
++--------+----------------+------------+------------------------+----------+
+|    201 | Raj Malhotra   | IT         | Software Engineer      | 55000.00 |
+|    202 | Simran Kaur    | HR         | HR Manager             | 48000.00 |
+|    203 | Amit Verma     | Finance    | Accountant             | 42000.00 |
+|    204 | Nisha Sharma   | IT         | System Analyst         | 60000.00 |
+|    205 | Rohit Gupta    | Marketing  | Marketing Executive    | 39000.00 |
+|    206 | Priyanka Singh | Finance    | Financial Analyst      | 52000.00 |
+|    207 | Arun Yadav     | IT         | Developer              | 45000.00 |
+|    208 | Meena Joshi    | HR         | Recruiter              | 35000.00 |
+|    209 | Vivek Tiwari   | Marketing  | Sales Manager          | 58000.00 |
+|    210 | Kunal Mehta    | IT         | Database Administrator | 62000.00 |
++--------+----------------+------------+------------------------+----------+
+10 rows in set (0.001 sec)
+
+MariaDB [employees]> create table staff(emp_id INT PRIMARY KEY,emp_name varchar(50));
+Query OK, 0 rows affected (0.186 sec)
+
+MariaDB [employees]> insert into staff(emp_id,emp_name) values (211,"Anmol Aditya"),(212,"Rudra Pratap"),(213,"Aditya Rao"),(214,"Anurag kumar"),(215,"Ankit Sapra");
+Query OK, 5 rows affected (0.036 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [employees]> select * from staff;
++--------+--------------+
+| emp_id | emp_name     |
++--------+--------------+
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
++--------+--------------+
+5 rows in set (0.001 sec)
+
+MariaDB [employees]> SELECT e.employeeid, e.emp_name
+    -> FROM staff e
+    -> JOIN staff s
+    -> ON e.employeeid = s.employeeid;
+ERROR 1054 (42S22): Unknown column 'e.employeeid' in 'field list'
+MariaDB [employees]> SELECT e.emp_id, e.emp_name FROM staff e JOIN staff s ON e.emp_id=s.emp_id;
++--------+--------------+
+| emp_id | emp_name     |
++--------+--------------+
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
++--------+--------------+
+5 rows in set (0.001 sec)
+
+MariaDB [employees]> create table department(emp_id INT PRIMARY KEY,city varchar(20));
+Query OK, 0 rows affected (0.045 sec)
+
+MariaDB [employees]> insert into department(emp_id,city) values (215,"Bhopal"),(216,"Jaipur"),(217,"Delhi"),(218,"Banglore");
+Query OK, 4 rows affected (0.007 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [employees]> select * from department;
++--------+----------+
+| emp_id | city     |
++--------+----------+
+|    215 | Bhopal   |
+|    216 | Jaipur   |
+|    217 | Delhi    |
+|    218 | Banglore |
++--------+----------+
+4 rows in set (0.001 sec)
+
+
+MariaDB [employees]> insert into department(emp_id,city) values (211,"Bhopal"),(212,"Jaipur"),(213,"Delhi"),(214,"Banglore");
+Query OK, 4 rows affected (0.035 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [employees]> select * from department;
++--------+----------+
+| emp_id | city     |
++--------+----------+
+|    211 | Bhopal   |
+|    212 | Jaipur   |
+|    213 | Delhi    |
+|    214 | Banglore |
+|    215 | Bhopal   |
+|    216 | Jaipur   |
+|    217 | Delhi    |
+|    218 | Banglore |
++--------+----------+
+8 rows in set (0.001 sec)
+
+
+MariaDB [employees]> select e.emp_id ,e.emp_name from staff e INNER JOIN employee d ON e.emp_id=e.emp_id;
++--------+--------------+
+| emp_id | emp_name     |
++--------+--------------+
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
+|    211 | Anmol Aditya |
+|    212 | Rudra Pratap |
+|    213 | Aditya Rao   |
+|    214 | Anurag kumar |
+|    215 | Ankit Sapra  |
++--------+--------------+
+50 rows in set (0.001 sec)
+
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city
+    -> FROM employee e
+    -> INNER JOIN department d
+    -> ON e.emp_id = d.emp_id;
+Empty set (0.001 sec)
+
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.cityFROM employee e ineer join department d ON e.emp_id=d.emp_id;
+
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e inner join department d ON e.emp_id=d.emp_id;
+Empty set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e inner join department d ON e.emp_id=d.emp_name;
+ERROR 1054 (42S22): Unknown column 'd.emp_name' in 'on clause'
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e inner join department d ON e.emp_id=d.emp_id;
+Empty set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e left join department d ON e.emp_id=d.emp_id;
++--------+----------------+------------+------------------------+----------+------+
+| emp_id | emp_name       | department | designation            | salary   | city |
++--------+----------------+------------+------------------------+----------+------+
+|    201 | Raj Malhotra   | IT         | Software Engineer      | 55000.00 | NULL |
+|    202 | Simran Kaur    | HR         | HR Manager             | 48000.00 | NULL |
+|    203 | Amit Verma     | Finance    | Accountant             | 42000.00 | NULL |
+|    204 | Nisha Sharma   | IT         | System Analyst         | 60000.00 | NULL |
+|    205 | Rohit Gupta    | Marketing  | Marketing Executive    | 39000.00 | NULL |
+|    206 | Priyanka Singh | Finance    | Financial Analyst      | 52000.00 | NULL |
+|    207 | Arun Yadav     | IT         | Developer              | 45000.00 | NULL |
+|    208 | Meena Joshi    | HR         | Recruiter              | 35000.00 | NULL |
+|    209 | Vivek Tiwari   | Marketing  | Sales Manager          | 58000.00 | NULL |
+|    210 | Kunal Mehta    | IT         | Database Administrator | 62000.00 | NULL |
++--------+----------------+------------+------------------------+----------+------+
+10 rows in set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e right join department d ON e.emp_id=d.emp_id;
++--------+----------+------------+-------------+--------+----------+
+| emp_id | emp_name | department | designation | salary | city     |
++--------+----------+------------+-------------+--------+----------+
+|   NULL | NULL     | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Banglore |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Banglore |
++--------+----------+------------+-------------+--------+----------+
+8 rows in set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e full join department d ON e.emp_id=d.emp_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'full join department d ON e.emp_id=d.emp_id' at line 1
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e left join department d ON e.emp_id=d.emp_id;
++--------+----------------+------------+------------------------+----------+------+
+| emp_id | emp_name       | department | designation            | salary   | city |
++--------+----------------+------------+------------------------+----------+------+
+|    201 | Raj Malhotra   | IT         | Software Engineer      | 55000.00 | NULL |
+|    202 | Simran Kaur    | HR         | HR Manager             | 48000.00 | NULL |
+|    203 | Amit Verma     | Finance    | Accountant             | 42000.00 | NULL |
+|    204 | Nisha Sharma   | IT         | System Analyst         | 60000.00 | NULL |
+|    205 | Rohit Gupta    | Marketing  | Marketing Executive    | 39000.00 | NULL |
+|    206 | Priyanka Singh | Finance    | Financial Analyst      | 52000.00 | NULL |
+|    207 | Arun Yadav     | IT         | Developer              | 45000.00 | NULL |
+|    208 | Meena Joshi    | HR         | Recruiter              | 35000.00 | NULL |
+|    209 | Vivek Tiwari   | Marketing  | Sales Manager          | 58000.00 | NULL |
+|    210 | Kunal Mehta    | IT         | Database Administrator | 62000.00 | NULL |
++--------+----------------+------------+------------------------+----------+------+
+10 rows in set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e right join department d ON e.emp_id=d.emp_id;
++--------+----------+------------+-------------+--------+----------+
+| emp_id | emp_name | department | designation | salary | city     |
++--------+----------+------------+-------------+--------+----------+
+|   NULL | NULL     | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Banglore |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Banglore |
++--------+----------+------------+-------------+--------+----------+
+8 rows in set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e right join department d ON e.department=d.city;
++--------+----------+------------+-------------+--------+----------+
+| emp_id | emp_name | department | designation | salary | city     |
++--------+----------+------------+-------------+--------+----------+
+|   NULL | NULL     | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Banglore |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL     | NULL       | NULL        |   NULL | Banglore |
++--------+----------+------------+-------------+--------+----------+
+8 rows in set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e left join department d ON e.emp_id=d.emp_id union SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e right join department d ON e.department=d.city;
++--------+----------------+------------+------------------------+----------+----------+
+| emp_id | emp_name       | department | designation            | salary   | city     |
++--------+----------------+------------+------------------------+----------+----------+
+|    201 | Raj Malhotra   | IT         | Software Engineer      | 55000.00 | NULL     |
+|    202 | Simran Kaur    | HR         | HR Manager             | 48000.00 | NULL     |
+|    203 | Amit Verma     | Finance    | Accountant             | 42000.00 | NULL     |
+|    204 | Nisha Sharma   | IT         | System Analyst         | 60000.00 | NULL     |
+|    205 | Rohit Gupta    | Marketing  | Marketing Executive    | 39000.00 | NULL     |
+|    206 | Priyanka Singh | Finance    | Financial Analyst      | 52000.00 | NULL     |
+|    207 | Arun Yadav     | IT         | Developer              | 45000.00 | NULL     |
+|    208 | Meena Joshi    | HR         | Recruiter              | 35000.00 | NULL     |
+|    209 | Vivek Tiwari   | Marketing  | Sales Manager          | 58000.00 | NULL     |
+|    210 | Kunal Mehta    | IT         | Database Administrator | 62000.00 | NULL     |
+|   NULL | NULL           | NULL       | NULL                   |     NULL | Bhopal   |
+|   NULL | NULL           | NULL       | NULL                   |     NULL | Jaipur   |
+|   NULL | NULL           | NULL       | NULL                   |     NULL | Delhi    |
+|   NULL | NULL           | NULL       | NULL                   |     NULL | Banglore |
++--------+----------------+------------+------------------------+----------+----------+
+14 rows in set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e cross join department d ON e.emp_id=d.emp_id;
+Empty set (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e cross join department d ON e.emp_id=d.emp_id;
+Empty set (0.001 sec)
+
+MariaDB [employees]> select e.emp_id,e.department,e.designation ,e.salary,d.city FROM employee e cross join department d ON e.emp_id = d.city;
+Empty set, 8 warnings (0.001 sec)
+
+MariaDB [employees]> select e.emp_id,e.department,e.designation ,e.salary,d.city FROM employee e cross right department d ON e.emp_id = d.city;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'right department d ON e.emp_id = d.city' at line 1
+MariaDB [employees]> select e.emp_id,e.department,e.designation ,e.salary,d.city FROM employee e  right join department d ON e.emp_id = d.city;
++--------+------------+-------------+--------+----------+
+| emp_id | department | designation | salary | city     |
++--------+------------+-------------+--------+----------+
+|   NULL | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL       | NULL        |   NULL | Banglore |
+|   NULL | NULL       | NULL        |   NULL | Bhopal   |
+|   NULL | NULL       | NULL        |   NULL | Jaipur   |
+|   NULL | NULL       | NULL        |   NULL | Delhi    |
+|   NULL | NULL       | NULL        |   NULL | Banglore |
++--------+------------+-------------+--------+----------+
+8 rows in set, 8 warnings (0.001 sec)
+
+MariaDB [employees]> SELECT e.emp_id, e.emp_name, e.department, e.designation, e.salary, d.city FROM employee e cross join department d ON e.emp_id=d.emp_id;
+Empty set (0.001 sec)
+
+MariaDB [employees]> select e.emp_id,e.emp_name,e.department,e.salary,e.designation,d.city FROM employee e self join department d on e.emp_id=d.emp_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'self join department d on e.emp_id=d.emp_id' at line 1
+MariaDB [employees]> select e.emp_name As employee,m.name AS manager from employee * left join employee m on e.manager
+
+
+
+
+
+#############04 February 2026 #####################################
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| employees          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+7 rows in set (0.220 sec)
+
+MariaDB [(none)]> use employees;
+Database changed
+MariaDB [employees]> show tables;
++---------------------+
+| Tables_in_employees |
++---------------------+
+| department          |
+| employee            |
+| staff               |
++---------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [employees]> select * from employee;
++--------+----------------+------------+------------------------+----------+
+| emp_id | emp_name       | department | designation            | salary   |
++--------+----------------+------------+------------------------+----------+
+|    201 | Raj Malhotra   | IT         | Software Engineer      | 55000.00 |
+|    202 | Simran Kaur    | HR         | HR Manager             | 48000.00 |
+|    203 | Amit Verma     | Finance    | Accountant             | 42000.00 |
+|    204 | Nisha Sharma   | IT         | System Analyst         | 60000.00 |
+|    205 | Rohit Gupta    | Marketing  | Marketing Executive    | 39000.00 |
+|    206 | Priyanka Singh | Finance    | Financial Analyst      | 52000.00 |
+|    207 | Arun Yadav     | IT         | Developer              | 45000.00 |
+|    208 | Meena Joshi    | HR         | Recruiter              | 35000.00 |
+|    209 | Vivek Tiwari   | Marketing  | Sales Manager          | 58000.00 |
+|    210 | Kunal Mehta    | IT         | Database Administrator | 62000.00 |
++--------+----------------+------------+------------------------+----------+
+10 rows in set (0.068 sec)
+
+MariaDB [employees]> create view data as select department from employee where department="IT";
+Query OK, 0 rows affected (0.042 sec)
+
+MariaDB [employees]> select * from data;
++------------+
+| department |
++------------+
+| IT         |
+| IT         |
+| IT         |
+| IT         |
++------------+
+4 rows in set (0.002 sec)
+
+MariaDB [employees]> create view display as select * from employee where department="IT";
+Query OK, 0 rows affected (0.035 sec)
+
+MariaDB [employees]> select * from display;
++--------+--------------+------------+------------------------+----------+
+| emp_id | emp_name     | department | designation            | salary   |
++--------+--------------+------------+------------------------+----------+
+|    201 | Raj Malhotra | IT         | Software Engineer      | 55000.00 |
+|    204 | Nisha Sharma | IT         | System Analyst         | 60000.00 |
+|    207 | Arun Yadav   | IT         | Developer              | 45000.00 |
+|    210 | Kunal Mehta  | IT         | Database Administrator | 62000.00 |
++--------+--------------+------------+------------------------+----------+
+4 rows in set (0.002 sec)
+
+MariaDB [employees]> create view greaterSalary as select * from employee where salary>70000;
+Query OK, 0 rows affected (0.035 sec)
+
+MariaDB [employees]> select * from greaterSalary;
+Empty set (0.001 sec)
+
+MariaDB [employees]> create view NameSalary as select emp_name,salary from employee where department="HR";
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [employees]> select * from Namesalary;
++-------------+----------+
+| emp_name    | salary   |
++-------------+----------+
+| Simran Kaur | 48000.00 |
+| Meena Joshi | 35000.00 |
++-------------+----------+
+2 rows in set (0.002 sec)
+
+MariaDB [employees]> create view Marketing_dept as select * from employee where department="Marketing" and salary<60000;
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [employees]> select * from Marketing_dept;
++--------+--------------+------------+---------------------+----------+
+| emp_id | emp_name     | department | designation         | salary   |
++--------+--------------+------------+---------------------+----------+
+|    205 | Rohit Gupta  | Marketing  | Marketing Executive | 39000.00 |
+|    209 | Vivek Tiwari | Marketing  | Sales Manager       | 58000.00 |
++--------+--------------+------------+---------------------+----------+
+2 rows in set (0.003 sec)
+
+MariaDB [employees]> select max(salary) from employee where department="IT";
++-------------+
+| max(salary) |
++-------------+
+|    62000.00 |

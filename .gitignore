@@ -1,0 +1,37 @@
+# Virtual environment
+env/
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables and API keys
+.env
+*.env
+!.env.example
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# VS Code settings (optional)
+.vscode/key.env 
+.env 
+*.env 
+env/ 
+venv/ 
+key.env 
+.env 
+*.env 
+env/ 
+venv/
+
+echo blog_generator_agent/ >> .gitignore
+echo notebooks/blog_generator_agent/ >> .gitignore
+
+
+echo notebooks/blog_generator_agent/ >> .gitignore
+echo env/ >> .gitignore
+echo .env >> .gitignore
+echo *.env >> .gitignore

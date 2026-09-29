@@ -1,0 +1,2 @@
+.venv/  rm --cached key.env
+.venv/  rm --cached key.env
